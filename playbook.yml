@@ -16,6 +16,7 @@
       - mongodb-compass-isolated-edition
       - todoist
       - mqtt-explorer
+      - microsoft-remote-desktop
     install_homebrew_if_missing: false
     upgrade_homebrew_packages: false
 
