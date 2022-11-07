@@ -4,6 +4,8 @@
   become: false 
   
   vars:
+    brew_cask_taps:
+      - homebrew/cask-fonts
     brew_cask_packages:
       - firefox
       - obsidian
@@ -17,6 +19,7 @@
       - todoist
       - mqtt-explorer
       - microsoft-remote-desktop
+      - font-fira-code
     install_homebrew_if_missing: false
     upgrade_homebrew_packages: false
 
@@ -48,6 +51,14 @@
     - name: Upgrading Homebrew Packages
       homebrew:
         upgrade_all: "{{ upgrade_homebrew_packages }}"
+      register: result
+      until: result is successful
+      when: homebrew_check.stat.exists
+
+    - name: Installing Homebrew Cask Taps
+      homebrew_tap:
+        name: "{{ brew_cask_taps }}"
+        state: present
       register: result
       until: result is successful
       when: homebrew_check.stat.exists
